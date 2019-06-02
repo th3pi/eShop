@@ -16,6 +16,9 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   String _titleValue;
   String _descriptionValue;
   double _priceValue;
+  FocusNode firstNode = FocusNode(),
+      secondNode = FocusNode(),
+      thirdNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
       child: ListView(
         children: <Widget>[
           TextField(
+            focusNode: firstNode,
+            onSubmitted: (String value) {
+              _titleValue = value;
+              FocusScope.of(context).requestFocus(secondNode);
+            },
             decoration: InputDecoration(labelText: 'Title'),
             onChanged: (String value) {
               setState(() {
@@ -32,6 +40,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             },
           ),
           TextField(
+            focusNode: secondNode,
+            onSubmitted: (String value) {
+              _descriptionValue = value;
+              FocusScope.of(context).requestFocus(thirdNode);
+            },
             decoration: InputDecoration(labelText: 'Description'),
             maxLines: 4,
             onChanged: (String value) {
@@ -41,6 +54,10 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             },
           ),
           TextField(
+            focusNode: thirdNode,
+            onSubmitted: (String value){
+              _priceValue = double.parse(value);
+            },
             decoration: InputDecoration(labelText: 'Price'),
             keyboardType: TextInputType.number,
             onChanged: (String value) {

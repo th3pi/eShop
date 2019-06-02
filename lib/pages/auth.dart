@@ -46,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
                 password = value;
               },
             ),
-            SwitchListTile(
+            CheckboxListTile(
               title: Text('Show Password'),
               value: _showPassword,
               onChanged: (bool value) {
