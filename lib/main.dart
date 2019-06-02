@@ -8,16 +8,19 @@ import 'product_manager.dart';
 
 void main() => runApp(MyApp());
 
-class _MyAppState extends State<MyApp>{
-  List<Map<String, String>> _products =[];
+class _MyAppState extends State<MyApp> {
+  List<Map<String, dynamic>> _products = [];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.deepOrange),
 //      home: AuthPage(),
       routes: {
-        'admin': (BuildContext) => ManagementPage(),
-        '/': (BuildContext) => ProductsPage(_products, _addProduct, _deleteProduct)
+        'products': (BuildContext) => ProductsPage(_products),
+        'admin': (BuildContext) => ManagementPage(_addProduct, _deleteProduct),
+        '/': (BuildContext) =>
+            AuthPage()
       },
       onGenerateRoute: (RouteSettings settings) {
         print(settings.name);
@@ -33,16 +36,21 @@ class _MyAppState extends State<MyApp>{
         }
         return null;
       },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+            builder: (BuildContext) =>
+                ProductsPage(_products));
+      },
     );
   }
 
-  void _addProduct(Map<String,String> product) {
+  void _addProduct(Map<String, dynamic> product) {
     setState(() {
       _products.add(product);
     });
   }
 
-  void _deleteProduct(int index){
+  void _deleteProduct(int index) {
     setState(() {
       _products.removeAt(index);
     });

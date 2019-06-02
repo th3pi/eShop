@@ -5,6 +5,11 @@ import 'product_create.dart';
 import 'product_list.dart';
 
 class ManagementPage extends StatelessWidget {
+  final Function addProduct;
+  final Function deleteProduct;
+
+  ManagementPage(this.addProduct, this.deleteProduct);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -19,9 +24,15 @@ class ManagementPage extends StatelessWidget {
                 title: Text('Choose'),
               ),
               ListTile(
+                title: Text('Login'),
+                onTap: (){
+                  Navigator.pushReplacementNamed(context, '/');
+                },
+              ),
+              ListTile(
                 title: Text('Products'),
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/');
+                  Navigator.pushReplacementNamed(context, 'product');
                 },
               )
             ],
@@ -41,7 +52,7 @@ class ManagementPage extends StatelessWidget {
           ]),
         ),
         body:
-            TabBarView(children: <Widget>[ProductCreatePage(), ProductList()]),
+            TabBarView(children: <Widget>[ProductCreatePage(addProduct), ProductList()]),
       ),
     );
   }
